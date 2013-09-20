@@ -7,4 +7,5 @@ en:
         foo: "Foo"
     mocks:
       view:
+        simple_translation: "Hello"
         translation_with_interpolation: "Hello %{name}"

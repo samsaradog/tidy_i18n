@@ -1,4 +1,11 @@
 module I18nDevTools
+  class RaiseAllErrors
+
+    def call(exception, locale, key, options)
+      raise exception.to_exception
+    end
+
+  end
 
   def self.project_root=(path)
     @project_root = path
@@ -6,6 +13,14 @@ module I18nDevTools
 
   def self.project_root
     @project_root
+  end
+
+  def self.raise_error_on_missing_translation=(raise_error)
+    if raise_error
+      I18n.exception_handler = RaiseAllErrors.new
+    else
+      I18n.exception_handler = :default_exception_handler
+    end
   end
 
   def self.translate(key, options={})

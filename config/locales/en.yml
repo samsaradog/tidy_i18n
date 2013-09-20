@@ -1,0 +1,10 @@
+en:
+  full:
+    path: "Localized Full Path"
+  spec:
+    i18n_dev_tools:
+      relative_key_spec:
+        foo: "Foo"
+    mocks:
+      view:
+        translation_with_interpolation: "Hello %{name}"

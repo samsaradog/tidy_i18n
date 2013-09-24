@@ -19,7 +19,7 @@ module I18nDevTools
     if raise_error
       I18n.exception_handler = RaiseAllErrors.new
     else
-      I18n.exception_handler = :default_exception_handler
+      I18n.exception_handler = I18n::ExceptionHandler.new
     end
   end
 

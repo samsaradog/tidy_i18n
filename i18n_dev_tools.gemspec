@@ -10,4 +10,5 @@ spec = Gem::Specification.new do |s|
   # s.rubyforge_project = "i18n_dev_tools"
   s.files         = Dir.glob('lib/**/*')
   s.require_paths = ["lib"]
+  s.add_dependency "i18n"
 end

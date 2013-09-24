@@ -1,4 +1,6 @@
 en:
+  hello_world: "HAI WORLD"
+  hello_person: "HAI %{name}"
   full:
     path: "Localized Full Path"
   spec:

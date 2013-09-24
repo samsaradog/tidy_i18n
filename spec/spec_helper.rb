@@ -1,4 +1,5 @@
 require "i18n"
+require "i18n_dev_tools"
 
 RSpec.configure do |config|
   config.before(:each) do

@@ -1,3 +1,5 @@
+require "i18n_dev_tools/translations"
+
 module I18nDevTools
   class DictionaryConverter
 

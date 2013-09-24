@@ -24,9 +24,8 @@ describe I18nDevTools::Locales::Reverse do
   end
 
   describe "using the reverse locale" do
-    xit "translates a simple value" do
-      # I18nDevTools.enable_test_translation(:reverse, I18nDevTools::Locales::Reverse)
-      I18n.load_path << File.join(I18nDevTools.project_root, "config", "locales", "auto_generated_translations.rb")
+    it "translates a simple value" do
+      I18n.load_path << File.join(I18nDevTools.project_root, "config", "locales", "auto_generated_locales.rb")
       I18n.locale = :reverse
       I18nDevTools.translate("hello_world").should == reverse(I18n.translate("hello_world", :locale => :en))
     end

@@ -1,4 +1,5 @@
 en:
+  utf_8: "Héllo Wørld"
   hello_world: "HAI WORLD"
   hello_person: "HAI %{name}"
   full:

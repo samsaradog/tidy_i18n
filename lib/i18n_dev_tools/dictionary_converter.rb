@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require "i18n_dev_tools/translations"
 
 module I18nDevTools
@@ -12,21 +13,29 @@ module I18nDevTools
     end
 
     def converted_dictionary
-      convert(dictionary)
+      convert_dictionary(dictionary, [])
     end
 
     private
 
-    def convert(dictionary)
+    def convert_dictionary(dictionary, path)
       dictionary.each_with_object({}) do |(key, value), new_dictionary|
-        case value.class.name
-        when "String"
-          new_dictionary[key] = locale.convert(value)
-        when "Hash"
-          new_dictionary[key] = convert(value)
-        else
-          raise InvalidTranslationValue.new(value.inspect)
-        end
+        new_dictionary[key] = convert_value(value, path + [key])
+      end
+    end
+
+    def convert_value(value, path)
+      case value.class.name
+      when "String"
+        locale.convert(value)
+      when "Hash"
+        convert_dictionary(value, path)
+      when "Array"
+        value.collect { |v| convert_value(v, path) }
+      when "Fixnum", "FalseClass", "TrueClass", "NilClass", "Symbol"
+        value
+      else
+        raise InvalidTranslationValue.new("#{path.join('.')} #{value.class.name} #{value.inspect}")
       end
     end
 

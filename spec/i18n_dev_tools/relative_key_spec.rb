@@ -21,6 +21,10 @@ describe I18nDevTools do
       it "translates a full path without expanding" do
         I18nDevTools.translate("full.path").should == I18n.translate("full.path")
       end
+
+      it "translates UTF 8 values" do
+        I18nDevTools.translate("utf_8").should == I18n.translate("utf_8")
+      end
     end
 
     context "with interpolation arguments" do

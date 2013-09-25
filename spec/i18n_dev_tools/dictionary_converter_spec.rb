@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require "i18n_dev_tools/dictionary_converter"
 
 require "surrogate/rspec"
@@ -105,13 +106,62 @@ describe I18nDevTools::DictionaryConverter do
     }
   end
 
-  it "raises an error for an invalid source dictionary" do
-    invalid_object = double("invalid object", inspect: "some invalid object")
-    expect {
-      converted_dictionary({
-        foo: invalid_object
-      })
-    }.to raise_error(/some invalid object/)
+  it "converts an Array" do
+    converted_dictionary({
+      "foo" => ["bar1", "bar2"]
+    }).should == {
+      "foo" => ["converted bar1", "converted bar2"]
+    }
+  end
+
+  it "leaves a Fixnum unchanged" do
+    converted_dictionary({
+      "foo" => 5,
+      "bar" => [1, 2, 3]
+    }).should == {
+      "foo" => 5,
+      "bar" => [1, 2, 3]
+    }
+  end
+
+  it "leaves bools unchanged" do
+    converted_dictionary({
+      "foo" => false,
+      "bar" => [true, false, true]
+    }).should == {
+      "foo" => false,
+      "bar" => [true, false, true]
+    }
+  end
+
+  it "leaves a Fixnum unchanged" do
+    converted_dictionary({
+      "foo" => 5,
+      "bar" => [1, 2, 3]
+    }).should == {
+      "foo" => 5,
+      "bar" => [1, 2, 3]
+    }
+  end
+
+  it "leaves a nil unchanged" do
+    converted_dictionary({
+      "foo" => nil,
+      "bar" => [nil]
+    }).should == {
+      "foo" => nil,
+      "bar" => [nil]
+    }
+  end
+
+  it "leaves symbols unchanged" do
+    converted_dictionary({
+      "foo" => :wat,
+      "bar" => [:baz, :quo]
+    }).should == {
+      "foo" => :wat,
+      "bar" => [:baz, :quo]
+    }
   end
 
 end

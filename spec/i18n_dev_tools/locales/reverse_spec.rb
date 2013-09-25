@@ -19,10 +19,6 @@ describe I18nDevTools::Locales::Reverse do
     reverse("ABC %{foo} DEF %{bar}").should == "%{bar} FED %{foo} CBA"
   end
 
-  it "works" do
-    reverse("ABC %{foo} DEF GHI").should == "IHG FED %{foo} CBA"
-  end
-
   describe "using the reverse locale" do
     it "translates a simple value" do
       I18n.load_path << File.join(I18nDevTools.project_root, "config", "locales", "auto_generated_locales.rb")

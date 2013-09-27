@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require "i18n_dev_tools/dictionary_converter"
+require "tidy_i18n/dictionary_converter"
 
 require "surrogate/rspec"
 module Mocks
@@ -12,11 +12,11 @@ module Mocks
   end
 end
 
-describe I18nDevTools::DictionaryConverter do
+describe TidyI18n::DictionaryConverter do
 
   def converted_dictionary(original_dictionary)
     phrase_converter = Mocks::PhraseConverter.factory
-    converter = I18nDevTools::DictionaryConverter.new(original_dictionary, phrase_converter)
+    converter = TidyI18n::DictionaryConverter.new(original_dictionary, phrase_converter)
     converter.converted_dictionary
   end
 

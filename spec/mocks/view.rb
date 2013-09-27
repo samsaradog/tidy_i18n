@@ -1,15 +1,15 @@
 require "i18n"
-require "i18n_dev_tools"
+require "tidy_i18n"
 
 module Mocks
   class View
 
     def simple_relative_translation
-      I18nDevTools.translate(".simple_translation")
+      TidyI18n.translate(".simple_translation")
     end
 
     def relative_translation_with_interpolation
-      I18nDevTools.translate(".translation_with_interpolation", name: "Eric")
+      TidyI18n.translate(".translation_with_interpolation", name: "Eric")
     end
 
     def indirect_translate

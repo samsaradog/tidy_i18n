@@ -1,7 +1,7 @@
 require "i18n"
 require "i18n/backend/simple"
 
-module I18nDevTools
+module TidyI18n
   class Translations
 
     def self.for_locale(locale)

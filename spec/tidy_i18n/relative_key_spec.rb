@@ -1,8 +1,8 @@
 require "spec_helper"
-require "i18n_dev_tools"
+require "tidy_i18n"
 require "mocks/view"
 
-describe I18nDevTools do
+describe TidyI18n do
 
   before(:each) do
     @mock_view = Mocks::View.new
@@ -11,7 +11,7 @@ describe I18nDevTools do
   describe "translate" do
     context "with no interpolation arguments" do
       it "expands a partial key into a full path" do
-        I18nDevTools.translate(".foo").should == I18n.translate("spec.i18n_dev_tools.relative_key_spec.foo")
+        TidyI18n.translate(".foo").should == I18n.translate("spec.tidy_i18n.relative_key_spec.foo")
       end
 
       it "expands a partial key when called in a different file" do
@@ -19,11 +19,11 @@ describe I18nDevTools do
       end
 
       it "translates a full path without expanding" do
-        I18nDevTools.translate("full.path").should == I18n.translate("full.path")
+        TidyI18n.translate("full.path").should == I18n.translate("full.path")
       end
 
       it "translates UTF 8 values" do
-        I18nDevTools.translate("utf_8").should == I18n.translate("utf_8")
+        TidyI18n.translate("utf_8").should == I18n.translate("utf_8")
       end
     end
 

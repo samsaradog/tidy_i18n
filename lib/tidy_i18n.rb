@@ -1,4 +1,4 @@
-module I18nDevTools
+module TidyI18n
   class RaiseAllErrors
 
     def call(exception, locale, key, options)

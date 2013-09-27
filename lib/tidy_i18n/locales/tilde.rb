@@ -1,4 +1,4 @@
-module I18nDevTools
+module TidyI18n
   module Locales
     class Tilde
 

@@ -5,7 +5,7 @@ en:
   full:
     path: "Localized Full Path"
   spec:
-    i18n_dev_tools:
+    tidy_i18n:
       relative_key_spec:
         foo: "Foo"
     mocks:

@@ -1,7 +1,7 @@
 # encoding: UTF-8
-require "i18n_dev_tools/translations"
+require "tidy_i18n/translations"
 
-module I18nDevTools
+module TidyI18n
   class DictionaryConverter
 
     class InvalidTranslationValue < StandardError

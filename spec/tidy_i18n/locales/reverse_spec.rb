@@ -34,6 +34,7 @@ describe TidyI18n::Locales::Reverse do
   describe "using the reverse locale" do
     it "translates a simple value" do
       I18n.load_path << File.join(TidyI18n.project_root, "config", "locales", "auto_generated_locales.rb")
+      I18n.reload!
       I18n.locale = :reverse
       TidyI18n.translate("hello_world").should == reverse(I18n.translate("hello_world", :locale => :en))
       TidyI18n.translate("hello_person", :name => "Eric").should == "Eric IAH"

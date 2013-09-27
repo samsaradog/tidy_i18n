@@ -5,7 +5,7 @@ module TidyI18n
   class Translations
 
     def self.for_locale(locale)
-      ::I18n.backend.send(:translations)[locale]
+      Marshal.load(Marshal.dump(::I18n.backend.send(:translations)[locale]))
     end
 
   end

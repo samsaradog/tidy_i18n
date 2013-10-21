@@ -29,5 +29,13 @@ describe TidyI18n::Locales::Tilde do
       I18n.locale = :tilde
       TidyI18n.translate("hello_person", :name => "Eric").should == "~HAI Eric~"
     end
+
+    it "retains the en locale" do
+      I18n.load_path << File.join(TidyI18n.project_root, "config", "locales", "auto_generated_locales.rb")
+      I18n.reload!
+      I18n.locale = :en
+      TidyI18n.translate("hello_world").should == "HAI WORLD"
+      TidyI18n.translate("full.path").should == "Localized Full Path"
+    end
   end
 end

@@ -48,6 +48,9 @@ describe TidyI18n do
       end
     end
 
-
+    it "also works by calling just 't'" do
+      TidyI18n.t(".foo").should == TidyI18n.translate(".foo")
+    end
   end
+
 end

@@ -36,4 +36,8 @@ module TidyI18n
     end
   end
 
+  class << self
+    alias :t :translate
+  end
+
 end

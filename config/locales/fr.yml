@@ -1,0 +1,14 @@
+fr:
+  utf_8: "Héllo Wørld"
+  hello_world: "HAI WORLD"
+  # hello_person: "HAI %{name}"
+  full:
+    path: "Localized Full Path"
+  spec:
+    tidy_i18n:
+      relative_key_spec:
+        # foo: "Foo"
+    mocks:
+      view:
+        # simple_translation: "Hello"
+        translation_with_interpolation: "Hello %{name}"

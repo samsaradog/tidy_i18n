@@ -33,3 +33,23 @@ task :find_missing_keys, [:locale] => :load_i18n do |t, args|
                                      :value_in_default_locale => "\"#{default_locale}\" value"
                                    }
 end
+
+task :find_duplicate_keys, [:locale] => :load_i18n do |t, args|
+  require "hirb"
+  require "tidy_i18n/duplicate_keys"
+  locale = args.locale
+  duplicate_keys = TidyI18n::DuplicateKeys.new(locale, I18n.load_path)
+  puts "Finding duplicate keys for \"#{locale}\""
+  duplicate_key_hashes = duplicate_keys.all.collect do |duplicate_key|
+    {
+      :name => duplicate_key.name,
+      :values => duplicate_key.values
+    }
+  end
+  puts Hirb::Helpers::Table.render duplicate_key_hashes,
+                                   :fields => [:name, :values],
+                                   :headers => {
+                                     :name => "Translation Key",
+                                     :values => "Values"
+                                   }
+end

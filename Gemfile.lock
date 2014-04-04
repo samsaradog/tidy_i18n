@@ -3,6 +3,7 @@ GEM
   specs:
     coderay (1.0.9)
     diff-lcs (1.2.4)
+    hirb (0.7.1)
     i18n (0.6.5)
     method_source (0.8.2)
     pry (0.9.12.2)
@@ -25,6 +26,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  hirb
   i18n
   pry
   rake

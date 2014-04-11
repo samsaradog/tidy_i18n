@@ -53,3 +53,12 @@ task :find_duplicate_keys, [:locale] => :load_i18n do |t, args|
                                      :values => "Values"
                                    }
 end
+
+desc "Running the example rake tasks"
+task :examples do
+  puts "************ find_missing_keys   ************"
+  Rake::Task[:find_missing_keys].invoke("fr")
+  puts "\n\n"
+  puts "************ find_duplicate_keys ************"
+  Rake::Task[:find_duplicate_keys].invoke("es_with_duplicates")
+end

@@ -3,3 +3,4 @@ script: bundle exec rake travis
 rvm:
   - 1.9.3
   - 2.3.3
+  - 2.4.0

@@ -1,11 +1,15 @@
 require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.verbose = false
+RSpec::Core::RakeTask.new(:spec) do |task|
+  task.verbose = false
 end
 
 task :default => :spec
 
+RSpec::Core::RakeTask.new(:travis) do |task|
+  task.verbose = false
+  task.rspec_opts = "--format documentation --color"
+end
 
 task :load_i18n do
   $: << File.expand_path(File.join(File.dirname(__FILE__), "lib"))

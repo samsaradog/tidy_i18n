@@ -114,7 +114,7 @@ describe TidyI18n::DictionaryConverter do
     }
   end
 
-  it "leaves a Fixnum unchanged" do
+  it "leaves an Integer unchanged" do
     converted_dictionary({
       "foo" => 5,
       "bar" => [1, 2, 3]
@@ -134,17 +134,7 @@ describe TidyI18n::DictionaryConverter do
     }
   end
 
-  it "leaves a Fixnum unchanged" do
-    converted_dictionary({
-      "foo" => 5,
-      "bar" => [1, 2, 3]
-    }).should == {
-      "foo" => 5,
-      "bar" => [1, 2, 3]
-    }
-  end
-
-  it "leaves a nil unchanged" do
+  it "leaves nil unchanged" do
     converted_dictionary({
       "foo" => nil,
       "bar" => [nil]

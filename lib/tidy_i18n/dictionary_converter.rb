@@ -32,7 +32,7 @@ module TidyI18n
         convert_dictionary(value, path)
       when "Array"
         value.collect { |v| convert_value(v, path) }
-      when "Fixnum", "FalseClass", "TrueClass", "NilClass", "Symbol"
+      when "Fixnum", "FalseClass", "TrueClass", "NilClass", "Symbol", "Integer"
         value
       else
         raise InvalidTranslationValue.new("#{path.join('.')} #{value.class.name} #{value.inspect}")

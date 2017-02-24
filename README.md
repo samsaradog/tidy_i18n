@@ -9,7 +9,9 @@ TidyI18n is a gem that wraps the I18n gem. It's purpose is to help you manage yo
 
 ## Dependencies
 
- * See .ruby-version file.
+ * Ruby
+    * .ruby-version file contains the latest version confirmed supported
+    * See .travis.yml for more supported versions
  * Bundler
 
 ## Usage

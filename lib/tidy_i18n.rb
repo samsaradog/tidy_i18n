@@ -1,3 +1,5 @@
+require "i18n"
+
 module TidyI18n
   class RaiseAllErrors
 

@@ -7,6 +7,10 @@ describe TidyI18n::Locales::Reverse do
     TidyI18n::Locales::Reverse.new.convert(value)
   end
 
+  before(:each) do
+    I18n.available_locales << :reverse
+  end
+
   it "reverses input with no interpolation" do
     expect(reverse("Some Value")).to eq("eulaV emoS")
   end

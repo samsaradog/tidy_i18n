@@ -3,7 +3,7 @@ require "tidy_i18n/translation_keys"
 describe TidyI18n::TranslationKeys do
 
   it "has no keys for an empty yaml" do
-    TidyI18n::TranslationKeys.parse("").should == []
+    expect(TidyI18n::TranslationKeys.parse("")).to eq([])
   end
 
   it "has one key for just the locale" do
@@ -11,9 +11,9 @@ describe TidyI18n::TranslationKeys do
 en:
 YAML
     keys = TidyI18n::TranslationKeys.parse(yaml)
-    keys.size.should == 1
-    keys.first.name.should == "en"
-    keys.first.value.should == ""
+    expect(keys.size).to eq(1)
+    expect(keys.first.name).to eq("en")
+    expect(keys.first.value).to eq("")
   end
 
   it "has one nested key" do
@@ -22,9 +22,9 @@ en:
   foo: "Bar"
 YAML
     keys = TidyI18n::TranslationKeys.parse(yaml)
-    keys.size.should == 1
-    keys.first.name.should == "en.foo"
-    keys.first.value.should == "Bar"
+    expect(keys.size).to eq(1)
+    expect(keys.first.name).to eq("en.foo")
+    expect(keys.first.value).to eq("Bar")
   end
 
   it "has two keys at the same level" do
@@ -34,11 +34,11 @@ en:
   bar: "BAR"
 YAML
     keys = TidyI18n::TranslationKeys.parse(yaml)
-    keys.size.should == 2
-    keys.first.name.should == "en.foo"
-    keys.first.value.should == "FOO"
-    keys.last.name.should == "en.bar"
-    keys.last.value.should == "BAR"
+    expect(keys.size).to eq(2)
+    expect(keys.first.name).to eq("en.foo")
+    expect(keys.first.value).to eq("FOO")
+    expect(keys.last.name).to eq("en.bar")
+    expect(keys.last.value).to eq("BAR")
   end
 
   it "has one key nested mutliple times" do
@@ -49,9 +49,9 @@ en:
       baz: "123"
 YAML
     keys = TidyI18n::TranslationKeys.parse(yaml)
-    keys.size.should == 1
-    keys.first.name.should == "en.foo.bar.baz"
-    keys.first.value.should == "123"
+    expect(keys.size).to eq(1)
+    expect(keys.first.name).to eq("en.foo.bar.baz")
+    expect(keys.first.value).to eq("123")
   end
 
   it "includes the same key twice" do
@@ -61,9 +61,9 @@ en:
   foo: Foo2
 YAML
     keys = TidyI18n::TranslationKeys.parse(yaml)
-    keys.size.should == 2
-    keys.map(&:name).should == ["en.foo", "en.foo"]
-    keys.map(&:value).should =~ ["Foo1", "Foo2"]
+    expect(keys.size).to eq(2)
+    expect(keys.map(&:name)).to eq(["en.foo", "en.foo"])
+    expect(keys.map(&:value)).to eq(["Foo1", "Foo2"])
   end
 
   describe "Parsing sequences" do
@@ -76,9 +76,9 @@ YAML
 
       keys = TidyI18n::TranslationKeys.parse(yaml)
 
-      keys.size.should == 1
-      keys.first.name.should == "en.day_names"
-      keys.first.value.should == ["Monday"]
+      expect(keys.size).to eq(1)
+      expect(keys.first.name).to eq("en.day_names")
+      expect(keys.first.value).to eq(["Monday"])
     end
 
     it "has a sequence followed by another key" do
@@ -91,11 +91,11 @@ YAML
 
       keys = TidyI18n::TranslationKeys.parse(yaml)
 
-      keys.size.should == 2
-      keys.first.name.should == "en.day_names"
-      keys.first.value.should == ["Monday"]
-      keys.last.name.should == "en.foo"
-      keys.last.value.should == "Bar"
+      expect(keys.size).to eq(2)
+      expect(keys.first.name).to eq("en.day_names")
+      expect(keys.first.value).to eq(["Monday"])
+      expect(keys.last.name).to eq("en.foo")
+      expect(keys.last.value).to eq("Bar")
     end
 
     it "has a two elements sequence" do
@@ -108,9 +108,9 @@ YAML
 
       keys = TidyI18n::TranslationKeys.parse(yaml)
 
-      keys.size.should == 1
-      keys.first.name.should == "en.day_names"
-      keys.first.value.should == ["Monday", "Tuesday"]
+      expect(keys.size).to eq(1)
+      expect(keys.first.name).to eq("en.day_names")
+      expect(keys.first.value).to eq(["Monday", "Tuesday"])
     end
 
     it "has a two elements sequence followed by another key" do
@@ -124,11 +124,11 @@ YAML
 
       keys = TidyI18n::TranslationKeys.parse(yaml)
 
-      keys.size.should == 2
-      keys.first.name.should == "en.day_names"
-      keys.first.value.should == ["Monday", "Tuesday"]
-      keys.last.name.should == "en.foo"
-      keys.last.value.should == "Bar"
+      expect(keys.size).to eq(2)
+      expect(keys.first.name).to eq("en.day_names")
+      expect(keys.first.value).to eq(["Monday", "Tuesday"])
+      expect(keys.last.name).to eq("en.foo")
+      expect(keys.last.value).to eq("Bar")
     end
 
     it "has a two sibling sequences" do
@@ -144,11 +144,11 @@ YAML
 
       keys = TidyI18n::TranslationKeys.parse(yaml)
 
-      keys.size.should == 2
-      keys.first.name.should == "en.day_names"
-      keys.first.value.should == ["Monday", "Tuesday"]
-      keys.last.name.should == "en.month_names"
-      keys.last.value.should == ["January", "February"]
+      expect(keys.size).to eq(2)
+      expect(keys.first.name).to eq("en.day_names")
+      expect(keys.first.value).to eq(["Monday", "Tuesday"])
+      expect(keys.last.name).to eq("en.month_names")
+      expect(keys.last.value).to eq(["January", "February"])
     end
   end
 
@@ -167,14 +167,14 @@ en:
   foo2: Wat
 YAML
     keys = TidyI18n::TranslationKeys.parse(yaml)
-    keys.size.should == 5
-    keys.map(&:name).should =~ [
+    expect(keys.size).to eq(5)
+    expect(keys.map(&:name)).to contain_exactly(
       "en.foo.bar",
       "en.foo.baz",
       "en.foo.quo.wat",
       "en.foo2",
       "en.foo.quo.multi"
-    ]
+    )
   end
 
 end

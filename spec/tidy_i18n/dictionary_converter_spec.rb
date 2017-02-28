@@ -21,53 +21,53 @@ describe TidyI18n::DictionaryConverter do
   end
 
   it "converts an empty dictionary" do
-    converted_dictionary({}).should == {}
+    expect(converted_dictionary({})).to eq({})
   end
 
   it "converts one key" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo" => "bar"
-    }).should == {
+    })).to eq({
       "foo" => "converted bar"
-    }
+    })
   end
 
   it "converts two keys at the top level" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo1" => "bar1",
       "foo2" => "bar2"
-    }).should == {
+    })).to eq({
       "foo1" => "converted bar1",
       "foo2" => "converted bar2"
-    }
+    })
   end
 
   it "converts a nested key" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo" => {
         "bar" => "baz"
       }
-    }).should == {
+    })).to eq({
       "foo" => {
         "bar" => "converted baz"
       }
-    }
+    })
   end
 
   it "works with symbols" do
-    converted_dictionary({
+    expect(converted_dictionary({
       foo: {
         bar: "baz"
       }
-    }).should == {
+    })).to eq({
       foo: {
         bar: "converted baz"
       }
-    }
+    })
   end
 
   it "converts a complicated example" do
-    converted_dictionary({
+    expect(converted_dictionary({
       a1: {
         b1: {
           c1: "c1 value",
@@ -85,7 +85,7 @@ describe TidyI18n::DictionaryConverter do
           }
         }
       }
-    }).should == {
+    })).to eq({
       a1: {
         b1: {
           c1: "converted c1 value",
@@ -103,55 +103,55 @@ describe TidyI18n::DictionaryConverter do
           }
         }
       }
-    }
+    })
   end
 
   it "converts an Array" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo" => ["bar1", "bar2"]
-    }).should == {
+    })).to eq({
       "foo" => ["converted bar1", "converted bar2"]
-    }
+    })
   end
 
   it "leaves an Integer unchanged" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo" => 5,
       "bar" => [1, 2, 3]
-    }).should == {
+    })).to eq({
       "foo" => 5,
       "bar" => [1, 2, 3]
-    }
+    })
   end
 
   it "leaves bools unchanged" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo" => false,
       "bar" => [true, false, true]
-    }).should == {
+    })).to eq({
       "foo" => false,
       "bar" => [true, false, true]
-    }
+    })
   end
 
   it "leaves nil unchanged" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo" => nil,
       "bar" => [nil]
-    }).should == {
+    })).to eq({
       "foo" => nil,
       "bar" => [nil]
-    }
+    })
   end
 
   it "leaves symbols unchanged" do
-    converted_dictionary({
+    expect(converted_dictionary({
       "foo" => :wat,
       "bar" => [:baz, :quo]
-    }).should == {
+    })).to eq({
       "foo" => :wat,
       "bar" => [:baz, :quo]
-    }
+    })
   end
 
 end

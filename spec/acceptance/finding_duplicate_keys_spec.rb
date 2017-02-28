@@ -9,17 +9,17 @@ describe "Finding duplicate translations" do
     end
     duplicate_keys = TidyI18n::DuplicateKeys.new("en", file_paths)
 
-    duplicate_keys.locale.should == "en"
+    expect(duplicate_keys.locale).to eq("en")
 
-    duplicate_keys.all.size.should == 2
+    expect(duplicate_keys.all.size).to eq(2)
 
     first_key = duplicate_keys.all.first
-    first_key.name.should == "a.b"
-    first_key.values.should =~ ["b1", "b2"]
+    expect(first_key.name).to eq("a.b")
+    expect(first_key.values).to eq(["b1", "b2"])
 
     second_key = duplicate_keys.all[1]
-    second_key.name.should == "d.f"
-    second_key.values.should =~ ["f1", "f2"]
+    expect(second_key.name).to eq("d.f")
+    expect(second_key.values).to eq(["f1", "f2"])
   end
 
 end

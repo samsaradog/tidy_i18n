@@ -9,18 +9,18 @@ describe "Finding missing translations" do
     end
     missing_keys = TidyI18n::MissingKeys.new("fr", file_paths)
 
-    missing_keys.locale_to_validate.should == "fr"
-    missing_keys.default_locale.should == I18n.default_locale
+    expect(missing_keys.locale_to_validate).to eq("fr")
+    expect(missing_keys.default_locale).to eq(I18n.default_locale)
 
-    missing_keys.all.size.should == 2
+    expect(missing_keys.all.size).to eq(2)
 
     first_key = missing_keys.all.first
-    first_key.name.should == "c"
-    first_key.value_in_default_locale.should == "2"
+    expect(first_key.name).to eq("c")
+    expect(first_key.value_in_default_locale).to eq("2")
 
     second_key = missing_keys.all[1]
-    second_key.name.should == "d.f"
-    second_key.value_in_default_locale.should == "4"
+    expect(second_key.name).to eq("d.f")
+    expect(second_key.value_in_default_locale).to eq("4")
   end
 
 end

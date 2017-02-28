@@ -1,6 +1,7 @@
 # Tidy I18n
 
 [![Build Status](https://travis-ci.org/ericmeyer/tidy_i18n.svg?branch=master)](https://travis-ci.org/ericmeyer/tidy_i18n)
+[![Gem Version](https://badge.fury.io/rb/tidy_i18n.svg)](https://badge.fury.io/rb/tidy_i18n)
 
 TidyI18n is a gem that wraps the I18n gem. It's purpose is to help you manage your locale files. Features include:
 

@@ -8,6 +8,7 @@ RSpec.configure do |config|
 
     I18n.load_path = [File.expand_path(File.join(TidyI18n.project_root, "config", "locales", "en.yml"))]
     I18n.locale = :en
+    I18n.available_locales = [:en]
     I18n.default_locale = :en
   end
 end

@@ -7,6 +7,10 @@ describe TidyI18n::Locales::Tilde do
     TidyI18n::Locales::Tilde.new.convert(value)
   end
 
+  before(:each) do
+    I18n.available_locales << :tilde
+  end
+
   it "wraps a value in tildes" do
     expect(tilde("Some Value")).to eq("~Some Value~")
   end

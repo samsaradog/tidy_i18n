@@ -1,6 +1,7 @@
 require "i18n"
 
 module TidyI18n
+  class ProjectRootNotConfigured < StandardError; end
   class RaiseAllErrors
 
     def call(exception, locale, key, options)
@@ -26,6 +27,7 @@ module TidyI18n
   end
 
   def self.translate(key, options={})
+    raise ProjectRootNotConfigured if project_root.nil?
     if key[0] == "."
       key_prefix = caller[0].
         gsub("#{project_root}/", "").

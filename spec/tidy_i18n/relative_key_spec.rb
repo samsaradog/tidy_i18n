@@ -9,6 +9,15 @@ describe TidyI18n do
   end
 
   describe "translate" do
+    context "with no project root set" do
+      it "raises an error" do
+        TidyI18n.project_root = nil
+        expect {
+          TidyI18n.translate("full.path")
+        }.to raise_error(TidyI18n::ProjectRootNotConfigured)
+      end
+    end
+
     context "with no interpolation arguments" do
       it "expands a partial key into a full path" do
         expect(TidyI18n.translate(".foo")).to eq(I18n.translate("spec.tidy_i18n.relative_key_spec.foo"))

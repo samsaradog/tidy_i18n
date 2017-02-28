@@ -2,7 +2,7 @@
 require "spec_helper"
 require "tidy_i18n"
 
-describe "Translating value" do
+describe "Translating values" do
 
   before(:each) do
     file_paths = ["en.yml", "en_with_unicode.yml"].collect do |path|
@@ -19,6 +19,13 @@ describe "Translating value" do
 
   it "works for a value with a unicode character" do
     expect(TidyI18n.translate("hello_snowman")).to eq("Hello ☃!")
+  end
+
+  it "raises an error when the project root is not set" do
+    TidyI18n.project_root = nil
+    expect {
+      TidyI18n.translate("a.b")
+    }.to raise_error(TidyI18n::ProjectRootNotConfigured)
   end
 
 end

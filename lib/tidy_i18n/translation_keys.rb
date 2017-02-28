@@ -1,4 +1,7 @@
+require "psych"
+
 module TidyI18n
+  TranslationKey = Struct.new(:name, :value)
   class TranslationKeys
 
     def self.parse(yaml)
@@ -7,34 +10,32 @@ module TidyI18n
 
     class RepeatKeyBuilder
 
-      TranslationKey = Struct.new(:name, :value)
       attr_reader :parsed_keys
 
       def initialize
         self.key_parts = []
         self.parsed_keys = []
+        self.current_sequence_values = []
       end
 
-      def start_stream(*row)
-        # puts "start_stream: #{row.inspect}"
-      end
-
-      def start_document(*row)
-        # puts "start_document: #{row.inspect}"
+      def start_stream(*row); end
+      def start_document(*row); end
+      def start_sequence(*row)
+        self.building_sequence = true
       end
 
       def start_mapping(*row)
-        @last_scalar = nil
+        @most_recent_scalar = nil
       end
 
       def scalar(*row)
-        if leaf?
-          parsed_keys << TranslationKey.new(key_parts.join("."), row.first)
-          @last_scalar = nil
-          key_parts.pop
+        if second_half_of_pair?
+          append_parsed_key(row.first)
+        elsif building_sequence?
+          current_sequence_values << row.first
         else
           key_parts << row.first
-          @last_scalar = row
+          @most_recent_scalar = row
         end
       end
 
@@ -42,22 +43,31 @@ module TidyI18n
         @key_parts.pop
       end
 
-      def end_document(*row)
-        # puts "end_document: #{row.inspect}"
-      end
-
-      def end_stream(*row)
-        # puts "end_stream: #{row.inspect}"
+      def end_document(*row); end
+      def end_stream(*row); end
+      def end_sequence
+        append_parsed_key(current_sequence_values)
+        self.building_sequence = false
+        self.current_sequence_values = []
       end
 
       private
 
-      def leaf?
-        @last_scalar
+      def append_parsed_key(value)
+        parsed_keys << TranslationKey.new(key_parts.join("."), value)
+        key_parts.pop
+        @most_recent_scalar = nil
       end
 
-      attr_accessor :key_parts
+      def building_sequence?
+        building_sequence
+      end
 
+      def second_half_of_pair?
+        @most_recent_scalar && !building_sequence?
+      end
+
+      attr_accessor :key_parts, :building_sequence, :current_sequence_values
       attr_writer :parsed_keys
 
     end
@@ -74,7 +84,7 @@ module TidyI18n
 
     def build_keys
       builder = RepeatKeyBuilder.new
-      parser = Psych::Parser.new builder
+      parser = Psych::Parser.new(builder)
       parser.parse(yaml)
       builder.parsed_keys
     end

@@ -44,4 +44,25 @@ describe TidyI18n::DuplicateKeys do
     expect(keys.count).to eq(1)
   end
 
+  it "has one duplicate key when only one is duplicated" do
+    en_part_one_yaml = double("en_part_one_yaml")
+    en_part_one_translation_keys = [
+      double("key occurence 1", :name => "en.foo", :value => "value 1"),
+    ]
+    allow(File).to receive(:read).with("en_part_one.yml").and_return(en_part_one_yaml)
+    allow(TidyI18n::TranslationKeys).to receive(:parse).with(en_part_one_yaml).and_return(en_part_one_translation_keys)
+
+    en_part_two_yaml = double("en_part_two_yaml")
+    en_part_two_translation_keys = [
+      double("key occurence 2", :name => "en.foo", :value => "value 2"),
+    ]
+    allow(File).to receive(:read).with("en_part_two.yml").and_return(en_part_two_yaml)
+    allow(TidyI18n::TranslationKeys).to receive(:parse).with(en_part_two_yaml).and_return(en_part_two_translation_keys)
+
+    keys = duplicate_keys("en", ["en_part_one.yml", "en_part_two.yml"]).all
+    expect(keys.count).to eq(1)
+    expect(keys.first.name).to eq("foo")
+    expect(keys.first.values).to contain_exactly("value 1", "value 2")
+  end
+
 end

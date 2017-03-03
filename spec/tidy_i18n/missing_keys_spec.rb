@@ -18,18 +18,17 @@ describe TidyI18n::MissingKeys do
     expect(missing_keys.all.count).to eq(0)
   end
 
-  it "has one missing key if there is only one key" do
-    en_yaml = double("en_yaml")
-    en_translation_keys = [
-      double("missing_key", :name => "en.foo", :value => "en value")
-    ]
-    allow(File).to receive(:read).with("en.yml").and_return(en_yaml)
-    allow(TidyI18n::TranslationKeys).to receive(:parse).with(en_yaml).and_return(en_translation_keys)
+  def stub_keys(file_name, keys)
+    yaml = double(file_name)
+    allow(File).to receive(:read).with(file_name).and_return(yaml)
+    allow(TidyI18n::TranslationKeys).to receive(:parse).with(yaml).and_return(keys)
+  end
 
-    fr_yaml = double("fr_yaml")
-    fr_translation_keys = []
-    allow(File).to receive(:read).with("fr.yml").and_return(fr_yaml)
-    allow(TidyI18n::TranslationKeys).to receive(:parse).with(fr_yaml).and_return(fr_translation_keys)
+  it "has one missing key if there is only one key" do
+    stub_keys("en.yml", [
+      double("missing_key", name: "en.foo", value: "en value")
+    ])
+    stub_keys("fr.yml", [])
 
     missing_keys = TidyI18n::MissingKeys.new("fr", ["en.yml", "fr.yml"])
     expect(missing_keys.all.count).to eq(1)
@@ -39,26 +38,35 @@ describe TidyI18n::MissingKeys do
   end
 
   it "does not include a key that is not missing" do
-    en_yaml = double("en_yaml")
-    en_translation_keys = [
-      double("missing_key", :name => "en.foo", :value => "en value one"),
-      double("missing_key", :name => "en.bar.baz", :value => "en value two")
-    ]
-    allow(File).to receive(:read).with("en.yml").and_return(en_yaml)
-    allow(TidyI18n::TranslationKeys).to receive(:parse).with(en_yaml).and_return(en_translation_keys)
-
-    fr_yaml = double("fr_yaml")
-    fr_translation_keys = [
-      double("missing_key", :name => "fr.foo", :value => "fr value one"),
-    ]
-    allow(File).to receive(:read).with("fr.yml").and_return(fr_yaml)
-    allow(TidyI18n::TranslationKeys).to receive(:parse).with(fr_yaml).and_return(fr_translation_keys)
+    stub_keys("en.yml", [
+      double("missing_key", name: "en.foo", value: "en value one"),
+      double("existing_key", name: "en.bar.baz", value: "en value two")
+    ])
+    stub_keys("fr.yml", [
+      double("existing_key", name: "fr.foo", value: "fr value one"),
+    ])
 
     missing_keys = TidyI18n::MissingKeys.new("fr", ["en.yml", "fr.yml"])
     expect(missing_keys.all.count).to eq(1)
     first_key = missing_keys.all.first
     expect(first_key.name).to eq("bar.baz")
     expect(first_key.value_in_default_locale).to eq("en value two")
+  end
+
+  it "has no missing keys when the keys exist in multiple files" do
+    stub_keys("en.yml", [
+      double("Key 1", name: "en.foo.bar", value: "en value 1"),
+      double("Key 2", name: "en.foo.baz", value: "en value 2")
+    ])
+    stub_keys("fr_part_one.yml", [
+      double("Key 1", name: "fr.foo.bar", value: "fr value 1"),
+    ])
+    stub_keys("fr_part_two.yml", [
+      double("Key 2", name: "fr.foo.baz", value: "fr value 2")
+    ])
+
+    missing_keys = TidyI18n::MissingKeys.new("fr", ["en.yml", "fr_part_one.yml", "fr_part_two.yml"])
+    expect(missing_keys.all.map(&:name)).to eq([])
   end
 
 end

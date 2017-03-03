@@ -17,11 +17,18 @@ TidyI18n is a gem that wraps the I18n gem. It's purpose is to help you manage yo
 
 ## Usage
 
+Install the gem.
+
 `gem install tidy_i18n`
 
 OR
 
 Add `gem "tidy_i18n"` to your Gemfile.
+
+Configure your project root:
+`TidyI18n.project_root="/absolute/path/to/project"`
+
+Configure I18n gem.
 
 ## Setup
 

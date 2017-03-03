@@ -12,8 +12,8 @@ module TidyI18n
     end
 
     def all
-      wat = translation_keys_for_current_locale.group_by(&:name).values
-      less = wat.select do |occurrences|
+      grouped_keys = translation_keys_for_current_locale.group_by(&:name).values
+      grouped_keys.select do |occurrences|
         occurrences.count > 1
       end.collect do |occurrences|
         OpenStruct.new({
@@ -34,7 +34,8 @@ module TidyI18n
         keys = TidyI18n::TranslationKeys.parse(File.read(locale_file_path))
         if keys.any?
           current_locale = keys.first.name.split(".").first
-          locale_to_keys[current_locale.to_s] = keys.collect do |key|
+          previous_keys = locale_to_keys.fetch(current_locale.to_s, [])
+          locale_to_keys[current_locale.to_s] = previous_keys + keys.collect do |key|
             OpenStruct.new({
               :name => key.name.sub(/^#{current_locale}\./, ""),
               :value => key.value

@@ -44,7 +44,8 @@ module TidyI18n
         keys = TidyI18n::TranslationKeys.parse(File.read(locale_file))
         if keys.any?
           current_locale = keys.first.name.split(".").first
-          locale_to_keys[current_locale.to_s] = keys.collect do |key|
+          previous_keys = locale_to_keys.fetch(current_locale.to_s, [])
+          locale_to_keys[current_locale.to_s] = previous_keys + keys.collect do |key|
             OpenStruct.new({
               :name => key.name.sub(/^#{current_locale}\./, ""),
               :value => key.value
